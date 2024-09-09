@@ -1,0 +1,72 @@
+<form [formGroup]="formAddCard" (ngSubmit)="onSubmit($event)">
+  <div class="mt-4 p-4 border border-black rounded flex flex-col gap-4">
+    <div>
+      <label for="name">Holder name</label><br />
+      <input
+        formControlName="name"
+        type="text"
+        class="w-full p-2 border border-gray rounded mt-1"
+      />
+    </div>
+    <div>
+      <label for="number">Card number</label><br />
+      <input
+        maxlength="19"
+        (input)="onCartNumberInput()"
+        formControlName="number"
+        type="text"
+        class="w-full p-2 border border-gray rounded mt-1"
+        placeholder="1234 1234 1234 1234"
+      />
+      <div class="text-red-500 text-sm" *ngIf="number && number.invalid && (number.dirty || number.touched)">
+        <div *ngIf="number.hasError('required')">Card number is required</div>
+        <div *ngIf="number.hasError('minlength') || number.hasError('maxlength')">Invalid card number</div>
+      </div>
+    </div>
+    <div>
+      <label for="expires">Expires</label><br />
+      <input
+        id="expires"
+        required
+        type="text"
+        formControlName="expires"
+        class="w-full p-2 border border-gray rounded mt-1"
+        placeholder="MM/YY"
+      />
+      <div class="text-red-500 text-sm" *ngIf="expires && expires.invalid && (expires.dirty || expires.touched)">
+        <div *ngIf="expires.hasError('required')">Expires is required</div>
+        <div *ngIf="expires.hasError('pattern')">Expires muse be in format MM/YY</div>
+      </div>
+    </div>
+    <div>
+      <label for="cvc">CVC</label><br />
+      <input
+        id="cvc"
+        required
+        (beforeinput)="validateCVC($event)"
+        formControlName="cvc"
+        type="text"
+        class="w-full p-2 border border-gray rounded mt-1"
+        placeholder="123"
+      />
+      <div class="text-red-500 text-sm" *ngIf="cvc && cvc.invalid && (cvc.dirty || cvc.touched)">
+        <div *ngIf="cvc.hasError('required')">CVC is required</div>
+        <div *ngIf="cvc.hasError('minlength') || cvc.hasError('maxlength')">CVC must be 3 characters</div>
+      </div>
+    </div>
+    <div class="flex gap-4 justify-end">
+      <app-button
+        class="flex-1"
+        (onClickEvent)="onCancel()"
+        label="Cancel"
+      ></app-button>
+      <button
+        [disabled]="!formAddCard.valid"
+        type="submit"
+        class="flex-1 rounded-md bg-slate-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</form>

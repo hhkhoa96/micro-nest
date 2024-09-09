@@ -15,7 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "auth-ui/Routes": ["apps/auth-ui/src/app/remote-entry/entry.routes.ts"]
+      "auth-ui/Routes": ["apps/auth-ui/src/app/remote-entry/entry.routes.ts"],
+      "payment-ui/Routes": [
+        "apps/payment-ui/src/app/remote-entry/entry.routes.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

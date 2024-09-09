@@ -1,0 +1,30 @@
+<div class="flex flex-col gap-4 p-4">
+    <div class="flex-1">
+        <h3 class="leading font-bold">Choose your payment method</h3>
+
+        <div *ngFor="let item of paymentMethods;" class="border mt-4 rounded p-4 flex border-black gap-4" (click)="selectPaymentMethod(item._id)">
+            <div>
+                <div class="flex gap-4 items-center">
+                    <img *ngIf="item.type === 'visa'" width="48" src="/images/visa.png">
+                    <img *ngIf="item.type === 'master card'" width="48" src="/images/master-card.png">
+                    <span>{{ item.number }}</span>
+                </div>
+                <div class="flex gap-4 items-center">
+                    <p>Expires</p>
+                    <div class="flex-1 flex justify-between">
+                        <span class="font-bold">{{ item.expiredDate }}</span>
+                        <span *ngIf="item.isDefault">Default</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-1 items-center justify-end">
+                <input type="radio" [checked]="item.checked"/>
+            </div>
+        </div>
+    </div>
+
+    <app-form *ngIf="isAdding" (cancelEvent)="toggleAdding()" (submitEvent)="onSubmit($event)"></app-form>
+    <div *ngIf="!isAdding" class="mt-4 p-6 border border-black rounded text-center cursor-pointer" (click)="toggleAdding()">
+        Add payment method
+    </div>
+</div>
